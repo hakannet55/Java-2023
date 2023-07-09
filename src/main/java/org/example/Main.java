@@ -24,7 +24,7 @@ public class Main {
             list = (JSONArray) address.getResponse().get("models");
         }
 
-        list = uniq(sortAryObj(list, "url"), "url");
+        list = removeDuplicate(sortAryObj(list, "url"), "url");
         if (type == TYPES.LIST) {
             //.withCustomParams(searchText, "url")
             JSONArray findResult = new Finder().withCustomParams(criticality_level, "criticality_level").buildToList(list);
@@ -65,7 +65,8 @@ public class Main {
 
     }
 
-    public static JSONArray uniq(JSONArray list, String keyName) {
+    public static JSONArray removeDuplicate(JSONArray list, String keyName) {
+        // remove duplicate
         JSONArray listFiltered = new JSONArray();
         ArrayList<String> tmpCache = new ArrayList<String>();
         list.forEach(i -> {
