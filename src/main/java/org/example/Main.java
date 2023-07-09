@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -13,7 +14,7 @@ public class Main {
         Boolean isMock = true;
         String searchText = "bc";
         String criticality_level = "3";
-        TYPES type = TYPES.OBJECT;
+        TYPES type = TYPES.LIST;
         Address address = new Address();
         JSONArray list;
         if (isMock) {
@@ -22,7 +23,8 @@ public class Main {
             address.requestApi();
             list = (JSONArray) address.getResponse().get("models");
         }
-        list = uniq(list, "url");
+
+        list = uniq(sortAryObj(list, "url"), "url");
         if (type == TYPES.LIST) {
             //.withCustomParams(searchText, "url")
             JSONArray findResult = new Finder().withCustomParams(criticality_level, "criticality_level").buildToList(list);
@@ -74,5 +76,16 @@ public class Main {
             }
         });
         return listFiltered;
+    }
+
+    public static JSONArray sortAryObj(JSONArray list, String key) {
+        List<Object> list2 = new ArrayList<>();
+        list.forEach(list2::add);
+        list2.sort((o1, o2) -> {
+            return ((JSONObject) o1).get(key).toString().compareTo(((JSONObject) o2).get(key).toString());
+        });
+        JSONArray shortedList = new JSONArray();
+        list2.forEach(shortedList::put);
+        return shortedList;
     }
 }

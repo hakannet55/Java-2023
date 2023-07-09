@@ -44,7 +44,7 @@ public class Address {
     }
 
     public JSONObject getMock() {
-        return new JSONObject("{'models':[{'url':'aa.com','criticality_level':3},{'url':'aa.com','criticality_level':4},{'url':'bc.com','criticality_level':3}]}");
+        return new JSONObject("{'models':[{'url':'caa.com','criticality_level':3},{'url':'aa.com','criticality_level':3},{'url':'bbc.com','criticality_level':3}]}");
     }
 
     public JSONObject getResponse() {
